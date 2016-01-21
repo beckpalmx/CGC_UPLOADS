@@ -13,7 +13,7 @@
 <%@ page import="com.db.DBConnect" %>
 <html>
     <head>
-        <title>CGC System</title>
+        <title>CMMS System</title>
     </head>
 
     <script>
@@ -25,7 +25,7 @@
 
     <%
 
-        String part_id = "";
+        String machine_id = "";
 
         int count1 = 0;
 
@@ -60,31 +60,25 @@
                     String value = item.getString();
                     System.out.println("name = " + name);
                     System.out.println("value = " + value);
-                    if (name.equals("A_part_id")) {
-                        part_id = value;
+                    if (name.equals("A_machine_id")) {
+                        machine_id = value;
                         count1 = 1;
-                        System.out.println("Final part_id = " + part_id);
+                        System.out.println("Final machine_id = " + machine_id);
                     }
                 } else {
                     System.out.println("savedFile Other ");
                     try {
-
-                        //String itemName = item.getName();
-                        String pic_name[] = item.getName().split("\\.");
-
-                        System.out.println("pic_name[0] = " + pic_name[0].toUpperCase());
-                        System.out.println("pic_name[1] = " + pic_name[1].toUpperCase());
-
-                        String picture_name = part_id + "." + pic_name[1].toUpperCase();
-
-                        File savedFile1 = new File("D:\\glassfishv4\\glassfish\\domains\\domain1\\applications\\CGC_UPLOADS\\UPLOADS\\PART\\" + picture_name);
+                        //String itemName = item.getName();                        
+                        String itemName = machine_id + ".JPG";
+                        File savedFile1 = new File("D:\\CGC\\UPLOADS\\" + itemName);
                         System.out.println("savedFile1 = " + savedFile1);
                         item.write(savedFile1);
 
-                        //File savedFile2 = new File("D:\\CGC\\UPLOADS\\PART\\" + picture_name);
-                        //System.out.println("savedFile2 = " + savedFile2);
-                        //item.write(savedFile2);
-                        String Update_Pic_Name = " update m_part set pic1 = '" + picture_name + "' ,update_by = 'upload_image' where part_id = '" + part_id + "'";
+                        File savedFile2 = new File("D:\\glassfishv4\\glassfish\\domains\\domain1\\applications\\CGC_UPLOADS\\UPLOADS\\" + itemName);
+                        System.out.println("savedFile2 = " + savedFile2);
+                        item.write(savedFile2);
+
+                        String Update_Pic_Name = " update m_machine set pic1 = '" + itemName + "' ,update_by = 'upload_image' where machine_id = '" + machine_id + "'";
 
                         System.out.println("Update_Pic_Name = " + Update_Pic_Name);
 
@@ -105,10 +99,10 @@
                         }
 
                         out.println("Upload file Successfully.<br>");
-                        out.println("Image File Name : " + picture_name);
+                        out.println("Image File Name : " + itemName);
                         //out.println("savedFile1 : " + savedFile1);
                         //out.println("savedFile2 : " + savedFile2);
-                        out.println("<br><img src='http://cgc-rv016.dyndns.org:8089/CGC_UPLOADS/UPLOADS/PART/" + picture_name + "' width='50%' height='50%'><br>");
+                        out.println("<br><img src='http://cgc-rv016.dyndns.org:8089/CGC_UPLOADS/UPLOADS/" + itemName + "' width='50%' height='50%'><br>");
 
                     } catch (Exception e) {
                         e.printStackTrace();

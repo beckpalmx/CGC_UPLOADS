@@ -7,7 +7,6 @@ package com.util;
 import com.db.DBConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -31,8 +30,8 @@ public class Uploadfile {
         UploadBean uploadBean_Backup = new UploadBean();
         PreparedStatement p = null;
         String value_pass = "";
-        String caseform_pass ;
-        String setfile_name ;
+        String caseform_pass = "";
+        String setfile_name = "";
         try{
             UploadFile uploadFile = (UploadFile) mul.getFiles().get("file_upload");
             setfile_name = uploadFile.getFileName().replace(".jpg", "_") +Long.toString(Math.abs(r.nextLong()),36)+new SimpleDateFormat("ddMMyy_hhmmssS").format(new Date())+".jpg";
@@ -54,7 +53,7 @@ public class Uploadfile {
             uploadBean.store(mul);
             uploadBean_Backup.store(mul);
         }catch(Exception e){
-            System.out.println("Err = " + e);
+            e.printStackTrace();
             status = -1;
         }finally{
             if(p != null){
@@ -76,9 +75,10 @@ public class Uploadfile {
             
             p.setString(1, upload_file_name);
             p.executeUpdate();
-        }catch(SQLException e){
-            System.out.println("Err = " + e);
-        }finally{            
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            p = null;
         }
     }
     public int Return_Status(){
